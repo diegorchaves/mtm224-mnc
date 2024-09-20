@@ -4,7 +4,7 @@ TARGET = programa
 # Compilador
 CC = gcc
 
-# Flags do compilador (por exemplo, -Wall para mostrar avisos, -g para debug)
+# Flags do compilador (-Wall para mostrar avisos, -g para debug)
 CFLAGS = -Wall -g
 
 # Bibliotecas extras (como a matemática -lm)
