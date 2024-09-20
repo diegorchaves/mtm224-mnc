@@ -14,7 +14,7 @@ n = 0
 a = 0
 b = 1
 chute = calcula_ponto_central(a, b)
-ERRO = 10e-6
+ERRO = 10e-15
 
 print("n, a, chute, b, valor_funcao, erro_relativo" )
 while abs(a - b) > ERRO:
