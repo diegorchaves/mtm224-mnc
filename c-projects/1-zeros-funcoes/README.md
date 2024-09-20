@@ -21,4 +21,4 @@ Agora, se obtivermos o resultado $f(a) * f(chute) > 0$, significa que $a$ e $chu
 
 A condição de parada pode ser determinada de diversas formas, nessa implementação utilizamos um ERRO no valor de $10^{-6}$. Enquanto o erro relativo dado por $|a-b| > ERRO$ mantém-se a execução do algoritmo.
 
-Com um ERRO de $10^{-6}$, teremos uma aproximação de raiz com 5 dígitos significativos corretos.
+Com um ERRO de $10^{-6}$, teremos uma aproximação de raiz com 6 dígitos significativos corretos.
