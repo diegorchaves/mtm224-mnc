@@ -53,7 +53,7 @@ Raiz *init(int a, int b)
 
 int main()
 {
-    Raiz *raiz = init(0, 1);
+    Raiz *raiz = init(-2, 0);
     while(!convergiu(raiz->erroRelativo))
     {
         printaIteracao(raiz->n, raiz->a, raiz->chute, 
