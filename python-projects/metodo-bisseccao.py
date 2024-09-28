@@ -1,33 +1,53 @@
-import numpy as np
+def printa_tabela_iteracoes(iteracoes):
+    # Cabeçalho da tabela
+    print(f"{'n':^10} | {'a_n':^10} | {'x_n':^10} | {'b_n':^10} | {'f(x_n)':^10} | {'ER_n':^10}")
+    print("-" * 75)
 
-def printa_iteracao(n, a, chute, b, valor_funcao, erro):
-    print(str(n) + " | a=" + str(a) + " | chute=", str(chute) + " | b=" + str(b) + " | valor_funcao=" + str(valor_funcao) + " | erro_rel=" + str(erro))
+    # Exibe cada linha de iteração
+    for iteracao in iteracoes:
+        n, a_n, x_n, b_n, f_x_n, erro_rel = iteracao
+        print(f"{n:^10} | {a_n:^10.6f} | {x_n:^10.6f} | {b_n:^10.6f} | {f_x_n:^10.6f} | {erro_rel:^10.6f}")
 
 def f(x):
     return x ** 3 - 2 * x ** 2 - 4 * x + 4
 
-# no intervalo [0, 1]
+# Função para calcular o ponto central (média)
 def calcula_ponto_central(a, b):
-    return ((a + b) / 2)
+    return (a + b) / 2
 
 n = 0
 a = 0
 b = 1
 chute = calcula_ponto_central(a, b)
-ERRO = 10e-15
+ERRO = 1e-6  # Precisão
+iteracoes = []  # Lista para armazenar os valores de cada iteração
 
-print("n, a, chute, b, valor_funcao, erro_relativo" )
+# Armazena a primeira linha (n=0)
+iteracoes.append([n, a, chute, b, f(chute), abs(a - b)])
+
+# Loop principal do método da bisseção
 while abs(a - b) > ERRO:
-    printa_iteracao(n, a, chute, b, f(chute), abs(a - b))
     n += 1
     chute = calcula_ponto_central(a, b)
+
+    # Verifica o sinal do produto para determinar a nova bisseção
     if f(chute) * f(a) < 0:
         b = chute
-    elif f(chute) * f(b) < 0:
+    else:
         a = chute
-    elif f(chute) == 0:
-        print(str(chute))
 
-printa_iteracao(n, a, chute, b, f(chute), abs(a - b))
+    # Cálculo do erro relativo
+    erro_relativo = abs(a - b)
+    
+    # Armazena os valores da iteração atual
+    iteracoes.append([n, a, chute, b, f(chute), erro_relativo])
 
-print("\n resultado = " + str(calcula_ponto_central(a, b)))
+    # Se f(chute) for exatamente 0, então a raiz foi encontrada
+    if f(chute) == 0:
+        break
+
+# Exibe a tabela formatada de iterações
+printa_tabela_iteracoes(iteracoes)
+
+# Exibir o resultado final (aproximação da raiz)
+print(f"\nRaiz aproximada: {calcula_ponto_central(a, b):.6f}")
