@@ -1,3 +1,4 @@
+from fpdf import FPDF
 import math
 
 # Definindo a constante de erro
@@ -11,11 +12,25 @@ def printa_iteracao(n, chute, fxn, erro_relativo):
     # Formatação da saída
     output = f"{n:<10} | {chute:.6f} | {fxn:.6f} | {erro_relativo:.6f}"
     print(output)
+    # Escreve no PDF
+    pdf.cell(0, 10, output, ln=True)
+
 
 # Chute inicial
 chute = 0.5
 erro_relativo = 1.0
 n = 0
+
+# Criando o PDF
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
+pdf.cell(0, 10, "Metodo Ponto Fixo, resolucao da funcao e^x - x - 2, intervalo [-2, -1]", ln=True)
+
+
+# Adiciona cabeçalho da tabela ao PDF
+pdf.cell(0, 10, "Iteração | x_n      | f(x_n)   | ER_n   ", ln=True)
+pdf.cell(0, 10, "-" * 50, ln=True)
 
 # Imprimir cabeçalho da tabela no console
 print(f"{'Iteração':<10} | {'x_n':<10} | {'f(x_n)':<10} | {'ER_n':<10}")
@@ -38,4 +53,9 @@ while erro_relativo > ERRO:
     n += 1
 
 # Resultado final
-print(f"\nRaiz aproximada = {chute:.6f}")
+output = f"\nRaiz aproximada = {chute:.6f}"
+print(output)
+
+# Finaliza o PDF
+pdf.cell(0, 10, output, ln=True)
+pdf.output("output_iteracoes_pt_fixo.pdf")

@@ -1,12 +1,26 @@
+from fpdf import FPDF
+
 def printa_tabela_iteracoes(iteracoes):
     # Cabeçalho da tabela
+    pdf.cell(0, 10, "Iteração | a_n      | x_n   | b_n    | f(x_n)    |  ER_n     ", ln=True)
+    pdf.cell(0, 10, "-" * 50, ln=True)
     print(f"{'n':^10} | {'a_n':^10} | {'x_n':^10} | {'b_n':^10} | {'f(x_n)':^10} | {'ER_n':^10}")
     print("-" * 75)
 
     # Exibe cada linha de iteração
     for iteracao in iteracoes:
         n, a_n, x_n, b_n, f_x_n, erro_rel = iteracao
-        print(f"{n:^10} | {a_n:^10.6f} | {x_n:^10.6f} | {b_n:^10.6f} | {f_x_n:^10.6f} | {erro_rel:^10.6f}")
+        output = f"{n:^10} | {a_n:^10.6f} | {x_n:^10.6f} | {b_n:^10.6f} | {f_x_n:^10.6f} | {erro_rel:^10.6f}"
+        print(output)
+        
+        # Escreve no PDF
+        pdf.cell(0, 10, output, ln=True)
+
+# Criando o PDF
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
+pdf.cell(0, 10, "Metodo da Bisseccao, resolucao da funcao x^3 - 2x^2 - 4x + 4, intervalo [0, 1]", ln=True)
 
 def f(x):
     return x ** 3 - 2 * x ** 2 - 4 * x + 4
@@ -49,5 +63,10 @@ while abs(a - b) > ERRO:
 # Exibe a tabela formatada de iterações
 printa_tabela_iteracoes(iteracoes)
 
+# Finaliza o PDF
+pdf.cell(0, 10, f"Raiz aproximada = {calcula_ponto_central(a, b):.6f}", ln=True)
+
 # Exibir o resultado final (aproximação da raiz)
 print(f"\nRaiz aproximada: {calcula_ponto_central(a, b):.6f}")
+
+pdf.output("output_iteracoes_bisseccao.pdf")
